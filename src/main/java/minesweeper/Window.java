@@ -103,7 +103,7 @@ class Window {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    class MouseClickHandler extends MouseAdapter {
+    private class MouseClickHandler extends MouseAdapter {
         @Override
         public void mousePressed(MouseEvent e) {
             if (inside(GRID_LEFT, GRID_TOP, mode.columns * CELL_SIDE, mode.rows * CELL_SIDE, e.getX(), e.getY())) {
@@ -126,7 +126,7 @@ class Window {
         Thread.ofVirtual().start(this::run);
     }
 
-    void run() {
+    private void run() {
         while (true) {
             switch (windowChannel.take()) {
                 case GameState gs -> onGameState(gs);
@@ -134,14 +134,14 @@ class Window {
         }
     }
 
-    void onGameState(GameState gs) {
+    private void onGameState(GameState gs) {
         EventQueue.invokeLater(() -> {
             gameState = gs;
             canvas.repaint();
         });
     }
 
-    void drawDigits(Graphics g, int numDigits, int right, int top, int width, int val) {
+    private void drawDigits(Graphics g, int numDigits, int right, int top, int width, int val) {
         for (int i = 0; i < numDigits; i++) {
             var digit = val % 10;
             g.drawImage(images.digits[digit], right - width, top, null);
@@ -150,11 +150,11 @@ class Window {
         }
     }
 
-    void drawBackground(Graphics g) {
+    private void drawBackground(Graphics g) {
         g.drawImage(images.backgrounds[mode.ordinal()], 0, 0, null);
     }
 
-    void drawFlagsPanel(Graphics g) {
+    private void drawFlagsPanel(Graphics g) {
         g.drawImage(images.digitPanel, FLAGS_PANEL_LEFT[mode.ordinal()], DIGIT_PANEL_TOP, null);
         drawDigits(
                 g,
@@ -165,11 +165,11 @@ class Window {
                 Math.max(0, mode.mines - countFlags()));
     }
 
-    int countFlags() {
+    private int countFlags() {
         return Stream.of(gameState.cellStates()).flatMap(Stream::of).mapToInt(c -> c.flagged() ? 1 : 0).sum();
     }
 
-    void drawTimePanel(Graphics g) {
+    private void drawTimePanel(Graphics g) {
         g.drawImage(
                 images.digitPanel,
                 WIDTH[mode.ordinal()] - FLAGS_PANEL_LEFT[mode.ordinal()] - DIGIT_PANEL_WIDTH,
@@ -184,7 +184,7 @@ class Window {
                 (int) Math.min(999, gameState.time()));
     }
 
-    void drawFace(Graphics g) {
+    private void drawFace(Graphics g) {
         var img = switch (gameState.state()) {
             case INIT -> images.faceHappy;
             case PLAYING -> images.faceHappy;
@@ -194,7 +194,7 @@ class Window {
         g.drawImage(img, FACE_LEFT[mode.ordinal()], FACE_TOP, null);
     }
 
-    void drawTiles(Graphics g) {
+    private void drawTiles(Graphics g) {
         var css = gameState.cellStates();
         mode.rowCols().forEach(rc -> g.drawImage(
                 tileImage(css[rc.row()][rc.col()]),
@@ -203,7 +203,7 @@ class Window {
                 null));
     }
 
-    BufferedImage tileImage(CellState cs) {
+    private BufferedImage tileImage(CellState cs) {
         if (cs.revealed()) {
             if (cs.mine()) {
                 return images.tileMine;
@@ -219,7 +219,7 @@ class Window {
         }
     }
 
-    class Canvas extends JPanel {
+    private class Canvas extends JPanel {
         @Override
         public void paint(Graphics g) {
             super.paint(g);
