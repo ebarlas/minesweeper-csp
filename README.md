@@ -50,11 +50,11 @@ Include `beginner`, `intermediate`, or `advanced` command-line argument to selec
 java --enable-preview -cp build/ minesweeper.Main advanced
 ```
 
-| Difficulty   | Rows | Columns | Mines |
-|--------------| ---- |---------|-------|
-| Beginner     | 9    | 9       | 10    |
-| Intermediate | 16   | 16      | 40    |
-| Advanced     | 16   | 30      | 99    |
+| Difficulty   | Rows | Columns | Mines | Mine Density |
+|--------------| ---- |---------|-------| ------------ |
+| Beginner     | 9    | 9       | 10    | 12%          |
+| Intermediate | 16   | 16      | 40    | 16%          |
+| Advanced     | 16   | 30      | 99    | 21%          |
 
 ## Assets
 
