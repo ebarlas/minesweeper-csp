@@ -22,7 +22,9 @@
                 <configuration>
                     <source>19</source>
                     <target>19</target>
-                    <compilerArgument>--enable-preview</compilerArgument>
+                    <compilerArgs>
+                        <compilerArg>--enable-preview</compilerArg>
+                    </compilerArgs>
                 </configuration>
             </plugin>
         </plugins>
